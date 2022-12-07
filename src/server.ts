@@ -11,6 +11,7 @@ import EnvVars from '@src/declarations/major/EnvVars';
 import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
 import { NodeEnvs } from '@src/declarations/enums';
 import { RouteError } from '@src/declarations/classes';
+import AuthRoute from "@src/routes/authRoute";
 
 
 // **** Init express **** //
@@ -37,7 +38,7 @@ if (EnvVars.nodeEnv === NodeEnvs.Production) {
 // **** Add API routes **** //
 
 // Add APIs
-//app.use('/api', BaseRouter);
+app.use('/auth', AuthRoute);
 
 // Setup error handler
 app.use((

@@ -19,4 +19,7 @@ export default {
     secret: (process.env.JWT_SECRET ??  ''),
     exp: (process.env.COOKIE_EXP ?? ''), // exp at the same time as the cookie
   },
+  mongo: {
+    uri: (process.env.MONGO_URI ?? ''),
+  }
 } as const;
