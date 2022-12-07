@@ -6,7 +6,6 @@ import express, { Request, Response, NextFunction } from 'express';
 
 import 'express-async-errors';
 
-import BaseRouter from './routes/api';
 import logger from 'jet-logger';
 import EnvVars from '@src/declarations/major/EnvVars';
 import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
@@ -39,7 +38,7 @@ if (EnvVars.nodeEnv === NodeEnvs.Production) {
 // **** Add API routes **** //
 
 // Add APIs
-app.use('/api', BaseRouter);
+//app.use('/api', BaseRouter);
 
 // Setup error handler
 app.use((
@@ -57,31 +56,11 @@ app.use((
   return res.status(status).json({ error: err.message });
 });
 
-
 // **** Serve front-end content **** //
-
-// Set views directory (html)
-const viewsDir = path.join(__dirname, 'views');
-app.set('views', viewsDir);
 
 // Set static directory (js and css).
 const staticDir = path.join(__dirname, 'public');
 app.use(express.static(staticDir));
-
-// Nav to login pg by default
-app.get('/', (_: Request, res: Response) => {
-  res.sendFile('login.html', {root: viewsDir});
-});
-
-// Redirect to login if not logged in.
-app.get('/users', (req: Request, res: Response) => {
-  const jwt = req.signedCookies[EnvVars.cookieProps.key];
-  if (!jwt) {
-    res.redirect('/');
-  } else {
-    res.sendFile('users.html', {root: viewsDir});
-  }
-});
 
 
 // **** Export default **** //
