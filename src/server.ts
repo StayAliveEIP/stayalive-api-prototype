@@ -17,7 +17,6 @@ import { RouteError } from '@src/declarations/classes';
 
 const app = express();
 
-
 // **** Set basic express settings **** //
 
 app.use(express.json());
