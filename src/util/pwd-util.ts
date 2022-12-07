@@ -18,14 +18,14 @@ function getHash(pwd: string): Promise<string> {
 /**
  * Useful for testing.
  */
-function hashSync(pwd: string): string {
+export function hashSync(pwd: string): string {
   return bcrypt.hashSync(pwd, saltRounds);
 }
 
 /**
  * See if a password passes the hash.
  */
-function compare(pwd: string, hash: string): Promise<boolean> {
+export function compare(pwd: string, hash: string): Promise<boolean> {
   return bcrypt.compare(pwd, hash);
 }
 

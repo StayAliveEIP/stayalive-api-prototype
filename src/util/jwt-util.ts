@@ -20,7 +20,7 @@ const options = {
 /**
  * Encrypt data and return jwt.
  */
-function sign(data: string | object | Buffer): Promise<string> {
+export function sign(data: string | object | Buffer): Promise<string> {
   return new Promise((res, rej) => {
     jsonwebtoken.sign(data, EnvVars.jwt.secret, options, (err, token) => {
       return err ? rej(err) : res(token || '');
