@@ -28,7 +28,7 @@ const runWebSocketServeur = () => {
 
   // Creating connection using websocket
   wss.on("connection", ws => {
-    logger.info("New client connected");
+    logger.info("💚New client connected");
     // sending message
     ws.on("message", data => {
       logger.info(`Client has sent us: ${data}`);
