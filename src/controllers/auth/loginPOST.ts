@@ -14,7 +14,7 @@ export default async (req: express.Request, res: express.Response, next: NextFun
         const userPassword: string = user.pwdHash === undefined ? "" : user.pwdHash;
         if (!await compare(password, userPassword))
             return res.status(400).json({error: "Wrong password"});
-        res.cookie("token", sign(user));
+        res.cookie("token", sign(user._id));
         return res.status(200).json({message: "User logged in"});
     } catch (err) {
         console.log(err);

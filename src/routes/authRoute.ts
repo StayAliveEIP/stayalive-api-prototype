@@ -1,9 +1,9 @@
 // crete a router
-import express, {NextFunction, Router} from "express";
+import {Router} from "express";
 
 const router = Router();
-import LoginController from "@src/controllers/auth/loginController";
-import RegisterController from "@src/controllers/auth/registerController";
+import LoginController from "@src/controllers/auth/loginPOST";
+import RegisterController from "@src/controllers/auth/registerPOST";
 
 router.post("/login", LoginController);
 router.post("/register", RegisterController);
