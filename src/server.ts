@@ -40,6 +40,10 @@ if (EnvVars.nodeEnv === NodeEnvs.Production) {
 // Add APIs
 app.use('/auth', AuthRoute);
 
+app.all('*', (req: Request, res: Response) => {
+  return (res.status(HttpStatusCodes.NOT_FOUND).json({error: 'Route not found'}));
+});
+
 // Setup error handler
 app.use((
   err: Error,

@@ -1,6 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
 import EnvVars from '../declarations/major/EnvVars';
 import mongoose from "mongoose";
+import {UserType} from "@src/types/mongo/user";
 
 
 // **** Variables **** //
@@ -21,8 +22,8 @@ const options = {
 /**
  * Encrypt data and return jwt.
  */
-export function sign(id: mongoose.Types.ObjectId): string {
-  return jsonwebtoken.sign(id, EnvVars.jwt.secret, options);
+export function sign(user: any): string {
+  return jsonwebtoken.sign({_id: user._id}, EnvVars.jwt.secret, options);
 }
 
 /**
