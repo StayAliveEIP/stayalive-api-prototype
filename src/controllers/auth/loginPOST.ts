@@ -6,7 +6,7 @@ import {UserType} from "@src/types/mongo/user";
 
 export default async (req: express.Request, res: express.Response) => {
     try {
-        const {email, password} = req.body;
+        const { email, password } = req.body;
         if (!email || !password)
             return res.status(400).json({error: "Missing email or password"});
         const user = await userModels.findOne({email: email});

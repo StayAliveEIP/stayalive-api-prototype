@@ -6,7 +6,7 @@ import {UserType} from "@src/types/mongo/user";
 
 /**
  * This route should follow the documentation here
- * {@link https://github.com/StayAliveEIP/stayalive-backend/wiki/Request-for-help-call-center}
+ * https://github.com/StayAliveEIP/stayalive-backend/wiki/Request-for-help-call-center
  * @param req The request
  * @param res The response
  */
