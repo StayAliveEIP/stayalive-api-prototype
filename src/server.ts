@@ -63,8 +63,8 @@ app.use((
 // **** Serve front-end content **** //
 
 // Set static directory (js and css).
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
+// const staticDir = path.join(__dirname, 'public');
+// app.use(express.static(staticDir));
 
 
 // **** Export default **** //
