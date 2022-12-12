@@ -32,7 +32,7 @@ const runWebSocketServeur = () => {
     logger.info("💚New client connected");
     // sending message
     ws.on("message", data => {
-      logger.info(`Client has sent us: ${data}`);
+      logger.info(`✉️ Client has sent us: ${data}`);
     });
     // handling what to do when clients disconnects from server
     ws.on("close", () => {
@@ -40,7 +40,7 @@ const runWebSocketServeur = () => {
     });
     // handling client connection error
     ws.onerror = function () {
-      logger.err("Some Error occurred");
+      logger.err("❌ Some Error occurred");
     };
   });
   logger.info("🚂️The WebSocket server is running on port 8080");
