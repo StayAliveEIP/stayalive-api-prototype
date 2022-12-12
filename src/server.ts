@@ -1,16 +1,15 @@
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import path from 'path';
 import helmet from 'helmet';
-import express, { Request, Response, NextFunction } from 'express';
+import express, {NextFunction, Request, Response} from 'express';
 
 import 'express-async-errors';
 
 import logger from 'jet-logger';
 import EnvVars from '@src/declarations/major/EnvVars';
 import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
-import { NodeEnvs } from '@src/declarations/enums';
-import { RouteError } from '@src/declarations/classes';
+import {NodeEnvs} from '@src/declarations/enums';
+import {RouteError} from '@src/declarations/classes';
 import AuthRoute from "@src/routes/authRoute";
 
 
