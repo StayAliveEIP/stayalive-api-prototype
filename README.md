@@ -29,11 +29,11 @@ Check for linting errors.
 
 Build the project for production.
 
-### `npm start`
+### `npm startWebSocketServer`
 
 Run the production build (Must be built first).
 
-### `npm start -- --env="name of env file" (default is production).`
+### `npm startWebSocketServer -- --env="name of env file" (default is production).`
 
 Run production build with a different env file.
 

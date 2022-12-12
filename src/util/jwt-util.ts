@@ -29,8 +29,8 @@ export function sign(user: any): string {
 /**
  * Decrypt JWT and extract client data.
  */
-function decode<T>(jwt: string): mongoose.Types.ObjectId | null {
-  return (jsonwebtoken.decode(jwt) as mongoose.Types.ObjectId);
+function decode(jwt: string): string | jsonwebtoken.JwtPayload | null {
+  return (jsonwebtoken.decode(jwt));
 }
 
 

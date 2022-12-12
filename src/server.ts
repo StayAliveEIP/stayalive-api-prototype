@@ -11,6 +11,9 @@ import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
 import {NodeEnvs} from '@src/declarations/enums';
 import {RouteError} from '@src/declarations/classes';
 import AuthRoute from "@src/routes/authRoute";
+import PrivateRoute from "@src/routes/privateRoute";
+import InterventionPOST from "@src/controllers/intervention/interventionPOST";
+import InterventionRoute from "@src/routes/interventionRoute";
 
 
 // **** Init express **** //
@@ -38,6 +41,8 @@ if (EnvVars.nodeEnv === NodeEnvs.Production) {
 
 // Add APIs
 app.use('/auth', AuthRoute);
+app.use('/private', PrivateRoute);
+app.use('/intervention', InterventionRoute);
 
 app.all('*', (req: Request, res: Response) => {
   return (res.status(HttpStatusCodes.NOT_FOUND).json({error: 'Route not found'}));

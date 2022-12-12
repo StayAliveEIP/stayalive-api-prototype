@@ -29,6 +29,7 @@
   "dependencies": {
     "@types/email-validator": "^1.0.6",
     "bcrypt": "^5.1.0",
+    "calculate-distance-between-coordinates": "^1.0.5",
     "command-line-args": "^5.2.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
