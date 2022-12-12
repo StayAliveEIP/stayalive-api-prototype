@@ -3,10 +3,11 @@ import logger from 'jet-logger';
 import { WebSocketServer } from 'ws';
 
 import EnvVars from '@src/declarations/major/EnvVars';
-import server from './server';
+import server from '@src/server';
 import mongoose from "mongoose";
 
 // **** Connect to mongoDB **** //
+mongoose.set('strictQuery', true);
 mongoose.connect(EnvVars.mongo.uri).then(() => {
   logger.info('🔫 Connected to MongoDB, the fastest database in the world');
 
