@@ -11,10 +11,20 @@ import {UserType} from "@src/types/mongo/user";
  * @param res The response
  */
 export default async (req: express.Request, res: express.Response) => {
-    try {
-        return (res.status(500).json({message: "Route under construction"}));
-    } catch (err) {
-        console.log(err);
-        return res.status(500).json({error: "Internal server error"});
-    }
-}
+  try {
+    const position = req.body.position;
+    const location = req.body.location;
+    if (position)
+      if (position.lat && position.lng) {
+
+      } else {
+        res.status(400).json({error: "Position must have lat and lng"});
+      }
+    if (!location && !position)
+      return res.status(400).json({error: "Missing location or position"});
+    return res.status(200).json({message: "OK"});
+  } catch (err) {
+    console.log(err);
+    return res.status(500).json({error: "Internal server error"});
+  }
+};
