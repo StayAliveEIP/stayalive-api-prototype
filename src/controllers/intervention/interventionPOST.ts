@@ -12,8 +12,8 @@ import {UserType} from "@src/types/mongo/user";
  */
 export default async (req: express.Request, res: express.Response) => {
   try {
-    const position = req.body.position;
-    const location = req.body.location;
+    const position  = req.body.position;
+    const location : object = req.body.location;
     if (position)
       if (position.lat && position.lng) {
 
