@@ -7,7 +7,7 @@ import verifyAuthorizationHeader from "@src/util/verify-auth";
 import {User} from "@src/types/User";
 
 const client_ws: Array<WebSocket> = [];
-let Users : User[] = [];
+const Users : User[] = [];
 
 export const startWebSocketServer = () => {
   const wss = new WebSocketServer({ port: 8080 });
@@ -32,7 +32,7 @@ const onConnectionHandler = async (ws: WebSocket, request: any) => {
   }
 
   logger.info("💚 New client connected to the WebSocket server");
-
+  client_ws.push(ws);
   // Setup handlers
   ws.on("message", (data) => onMessageHandler(ws, data));
   ws.on("close", () => onCloseHandler(ws));
@@ -45,6 +45,7 @@ const onMessageHandler = (ws: WebSocket, data: RawData) => {
 };
 
 const onCloseHandler = (ws: WebSocket) => {
+  client_ws.splice(client_ws.indexOf(ws), 1);
   logger.info("💔 A client was disconnected");
 };
 
