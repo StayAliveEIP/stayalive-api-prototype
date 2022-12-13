@@ -1,5 +1,7 @@
 import jsonwebtoken from 'jsonwebtoken';
 import EnvVars from '../declarations/major/EnvVars';
+import mongoose from "mongoose";
+import {UserType} from "@src/types/mongo/user";
 
 
 // **** Variables **** //
@@ -20,23 +22,15 @@ const options = {
 /**
  * Encrypt data and return jwt.
  */
-function sign(data: string | object | Buffer): Promise<string> {
-  return new Promise((res, rej) => {
-    jsonwebtoken.sign(data, EnvVars.jwt.secret, options, (err, token) => {
-      return err ? rej(err) : res(token || '');
-    });
-  });
+export function sign(user: any): string {
+  return jsonwebtoken.sign({_id: user._id}, EnvVars.jwt.secret, options);
 }
 
 /**
  * Decrypt JWT and extract client data.
  */
-function decode<T>(jwt: string): Promise<string | undefined | T> {
-  return new Promise((res, rej) => {
-    jsonwebtoken.verify(jwt, EnvVars.jwt.secret, (err, decoded) => {
-      return err ? rej(errors.validation) : res(decoded as T);
-    });
-  });
+function decode(jwt: string): string | jsonwebtoken.JwtPayload | null {
+  return (jsonwebtoken.decode(jwt));
 }
 
 

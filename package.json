@@ -2,11 +2,11 @@
   "name": "stayalive-backend",
   "version": "0.0.0",
   "scripts": {
-    "build": "npx ts-node build.ts",
+    "build": "tsc",
     "lint": "npx eslint --ext .ts src/",
     "lint:tests": "npx eslint --ext .ts spec/",
-    "start": "node -r module-alias/register ./dist --env=production",
-    "dev": "nodemon",
+    "start": "tsc && tsc-alias && node ./dist/index.js",
+    "dev": "nodemon --env development",
     "test": "nodemon --config ./spec/nodemon.json",
     "test:no-reloading": "npx ts-node --files -r tsconfig-paths/register ./spec"
   },
@@ -27,10 +27,13 @@
     "node": ">=8.10.0"
   },
   "dependencies": {
+    "@types/email-validator": "^1.0.6",
     "bcrypt": "^5.1.0",
+    "calculate-distance-between-coordinates": "^1.0.5",
     "command-line-args": "^5.2.1",
     "cookie-parser": "^1.4.6",
     "dotenv": "^16.0.3",
+    "email-validator": "^2.0.4",
     "express": "^4.18.2",
     "express-async-errors": "^3.1.1",
     "helmet": "^6.0.1",
@@ -39,7 +42,10 @@
     "jsonfile": "^6.1.0",
     "jsonwebtoken": "^8.5.1",
     "module-alias": "^2.2.2",
-    "morgan": "^1.10.0"
+    "mongoose": "^6.8.0",
+    "morgan": "^1.10.0",
+    "tspath": "^2.6.8",
+    "ws": "^8.11.0"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
@@ -51,9 +57,11 @@
     "@types/jasmine": "^4.3.1",
     "@types/jsonfile": "^6.1.0",
     "@types/jsonwebtoken": "^8.5.9",
+    "@types/mongoose": "^5.11.97",
     "@types/morgan": "^1.9.3",
     "@types/node": "^18.11.11",
     "@types/supertest": "^2.0.12",
+    "@types/ws": "^8.5.3",
     "@typescript-eslint/eslint-plugin": "^5.45.1",
     "@typescript-eslint/parser": "^5.45.1",
     "eslint": "^8.29.0",
@@ -64,6 +72,7 @@
     "nodemon": "^2.0.20",
     "supertest": "^6.3.2",
     "ts-node": "^10.9.1",
+    "tsc-alias": "^1.8.2",
     "tsconfig-paths": "^4.1.1",
     "typescript": "^4.9.3"
   }

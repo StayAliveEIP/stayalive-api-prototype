@@ -1,23 +1,24 @@
 import cookieParser from 'cookie-parser';
 import morgan from 'morgan';
-import path from 'path';
 import helmet from 'helmet';
-import express, { Request, Response, NextFunction } from 'express';
+import express, {NextFunction, Request, Response} from 'express';
 
 import 'express-async-errors';
 
-import BaseRouter from './routes/api';
 import logger from 'jet-logger';
 import EnvVars from '@src/declarations/major/EnvVars';
 import HttpStatusCodes from '@src/declarations/major/HttpStatusCodes';
-import { NodeEnvs } from '@src/declarations/enums';
-import { RouteError } from '@src/declarations/classes';
+import {NodeEnvs} from '@src/declarations/enums';
+import {RouteError} from '@src/declarations/classes';
+import AuthRoute from "@src/routes/authRoute";
+import PrivateRoute from "@src/routes/privateRoute";
+import InterventionPOST from "@src/controllers/intervention/interventionPOST";
+import InterventionRoute from "@src/routes/interventionRoute";
 
 
 // **** Init express **** //
 
 const app = express();
-
 
 // **** Set basic express settings **** //
 
@@ -39,7 +40,13 @@ if (EnvVars.nodeEnv === NodeEnvs.Production) {
 // **** Add API routes **** //
 
 // Add APIs
-app.use('/api', BaseRouter);
+app.use('/auth', AuthRoute);
+app.use('/private', PrivateRoute);
+app.use('/intervention', InterventionRoute);
+
+app.all('*', (req: Request, res: Response) => {
+  return (res.status(HttpStatusCodes.NOT_FOUND).json({error: 'Route not found'}));
+});
 
 // Setup error handler
 app.use((
@@ -57,31 +64,11 @@ app.use((
   return res.status(status).json({ error: err.message });
 });
 
-
 // **** Serve front-end content **** //
 
-// Set views directory (html)
-const viewsDir = path.join(__dirname, 'views');
-app.set('views', viewsDir);
-
 // Set static directory (js and css).
-const staticDir = path.join(__dirname, 'public');
-app.use(express.static(staticDir));
-
-// Nav to login pg by default
-app.get('/', (_: Request, res: Response) => {
-  res.sendFile('login.html', {root: viewsDir});
-});
-
-// Redirect to login if not logged in.
-app.get('/users', (req: Request, res: Response) => {
-  const jwt = req.signedCookies[EnvVars.cookieProps.key];
-  if (!jwt) {
-    res.redirect('/');
-  } else {
-    res.sendFile('users.html', {root: viewsDir});
-  }
-});
+// const staticDir = path.join(__dirname, 'public');
+// app.use(express.static(staticDir));
 
 
 // **** Export default **** //
