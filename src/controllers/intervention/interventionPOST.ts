@@ -33,7 +33,6 @@ export default async (req: express.Request, res: express.Response) => {
     const coord : Coordinate = {lat: data["lat"] , lon: data["lng"]};
 
     const nearest : User = getNearestUser(coord);
-    console.log(nearest);
     return res.status(200).json({message: "Location received", nearest: nearest});
   } catch (e) {
     console.error(e);

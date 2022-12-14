@@ -7,13 +7,15 @@ import verifyAuthorizationHeader from "@src/util/verify-auth";
 import {User} from "@src/types/User";
 
 const client_ws: Array<WebSocket> = [];
-const Users : User[] = [];
+export const Users : User[] = [];
 
 export const startWebSocketServer = () => {
   const wss = new WebSocketServer({ port: 8080 });
 
   // Creating connection using websocket
   wss.on("connection", onConnectionHandler);
+
+
 
   logger.info("🚂️The WebSocket server is running on port 8080");
 };
@@ -32,7 +34,9 @@ const onConnectionHandler = async (ws: WebSocket, request: any) => {
   }
 
   logger.info("💚 New client connected to the WebSocket server");
-  client_ws.push(ws);
+
+  const newClient : User = { ws: ws, id: Users.length + 1, name: "user" + (Users.length + 1), position: {lat: 0, lon: 0}, active: false};
+  Users.push(newClient);
   // Setup handlers
   ws.on("message", (data) => onMessageHandler(ws, data));
   ws.on("close", () => onCloseHandler(ws));
@@ -41,15 +45,28 @@ const onConnectionHandler = async (ws: WebSocket, request: any) => {
 };
 
 const onMessageHandler = (ws: WebSocket, data: RawData) => {
-  logger.info(`✉️ Client has sent us: ${data}`);
+  const message = JSON.parse(data.toString());
+  if (!message["type"] || !message["position"])
+    return;
+  if (message.type === "position") {
+    Users.forEach((user, index) => {
+      if (user.ws === ws) {
+        Users[index].position = message.position;
+      }
+    });
+  }
+  logger.info("📨 New message from a client: " + message);
 };
 
 const onCloseHandler = (ws: WebSocket) => {
-  client_ws.splice(client_ws.indexOf(ws), 1);
+  Users.forEach((user, index) => {
+    if (user.ws === ws) {
+      Users.splice(index, 1);
+    }
+  });
   logger.info("💔 A client was disconnected");
 };
 
 const onErrorHandler = (ws: WebSocket) => {
   logger.err("❌ Some error occurred");
 };
-

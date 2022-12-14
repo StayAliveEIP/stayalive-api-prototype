@@ -7,5 +7,5 @@ import {Coordinate, getDistanceBetweenTwoPoints} from "calculate-distance-betwee
  * @param positionB The second position (latitude and longitude).
  */
 export default (positionA: Coordinate, positionB: Coordinate): number => {
-    return (getDistanceBetweenTwoPoints(positionA, positionB, 'km'));
-}
+  return (getDistanceBetweenTwoPoints(positionA, positionB, 'km'));
+};
