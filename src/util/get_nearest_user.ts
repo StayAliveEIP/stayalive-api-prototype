@@ -28,6 +28,7 @@ export function getNearestUser (coordinate : Coordinate) : User | null {
     position: bestUser.position,
     name: bestUser.name,
     distance: bestUser.distance,
+    ws: bestUser.ws,
   };
   return cleanedUser as User;
 }

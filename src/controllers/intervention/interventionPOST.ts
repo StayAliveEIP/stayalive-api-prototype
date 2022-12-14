@@ -40,7 +40,12 @@ export default async (req: express.Request, res: express.Response) => {
       location: location,
     },
     ));
-    return res.status(200).json({message: "Location received", nearest: nearest});
+    const cleanUser = {
+      id: nearest.id,
+      name: nearest.name,
+      position: nearest.position,
+    };
+    return res.status(200).json({message: "Location received", nearest: cleanUser});
   } catch (e) {
     console.error(e);
     return res.status(500).json({error: "Internal server error"});
