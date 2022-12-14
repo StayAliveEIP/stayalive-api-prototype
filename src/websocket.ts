@@ -19,8 +19,6 @@ export const startWebSocketServer = () => {
 };
 
 const onConnectionHandler = async (ws: WebSocket, request: any) => {
-
-  request.headers;
   const headerAuthorization = request.headers.authorization;
   const errorMessage = await verifyAuthorizationHeader(headerAuthorization);
   if (errorMessage !== null && errorMessage !== undefined) {
@@ -32,6 +30,7 @@ const onConnectionHandler = async (ws: WebSocket, request: any) => {
   }
 
   logger.info("💚 New client connected to the WebSocket server");
+
 
   const newClient : User = { ws: ws, id: Users.length + 1, name: "user" + (Users.length + 1), position: {lat: 0, lon: 0}, active: false, distance: 99999};
   Users.push(newClient);

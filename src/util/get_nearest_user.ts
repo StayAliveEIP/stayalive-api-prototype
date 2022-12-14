@@ -4,19 +4,25 @@ import {User} from "@src/types/User";
 import {Users} from "@src/websocket";
 import {stringify} from "flatted";
 import WebSocket from "ws";
-export function getNearestUser (Coord : Coordinate) : User {
-
-  let bestUser : User = Users[0];
+export function getNearestUser (coordinate : Coordinate) : User | null {
+  console.log(Users.length)
+  let bestUser : User | null = null;
   for  (let i = 0; i < Users.length; i++) {
-    {
-      const distance = computeDistance(Coord, Users[i].position);
-      console.log("Distance : " + distance);
-      Users[i].distance = distance;
-      if (distance < computeDistance(Coord, bestUser.position)) {
-        bestUser = Users[i];
-      }
+    const tmpUser = Users[i];
+
+    if (bestUser == null) {
+      bestUser = tmpUser;
+      continue;
+    }
+
+    const distance = computeDistance(coordinate, tmpUser.position);
+    Users[i].distance = distance;
+    if (distance < computeDistance(coordinate, bestUser.position)) {
+      bestUser = Users[i];
     }
   }
+  if (bestUser == null)
+    return null;
   const cleanedUser : object = {
     id: bestUser.id,
     position: bestUser.position,

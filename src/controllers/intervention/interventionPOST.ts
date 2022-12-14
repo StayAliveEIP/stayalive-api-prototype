@@ -8,6 +8,7 @@ import computeDistance from "@src/util/compute-distance";
 import {Coordinate} from "calculate-distance-between-coordinates";
 import {User} from "@src/types/User";
 import {getNearestUser} from "@src/util/get_nearest_user";
+import {Users} from "@src/websocket";
 
 /**
  * This route should follow the documentation here
@@ -31,7 +32,14 @@ export default async (req: express.Request, res: express.Response) => {
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
     const coord : Coordinate = {lat: data.data[0].latitude, lon: data.data[0].longitude};
-    const nearest : User = getNearestUser(coord);
+    const nearest : User | null = getNearestUser(coord);
+    if (nearest == null)
+      return (res.status(404).json({error: "NO_USER_AVAILABLE"}));
+    nearest.ws.send(JSON.stringify({
+      type: "alert",
+      location: location,
+    },
+    ));
     return res.status(200).json({message: "Location received", nearest: nearest});
   } catch (e) {
     console.error(e);
