@@ -30,8 +30,7 @@ export default async (req: express.Request, res: express.Response) => {
     const data : object =  await getCoordinatesFromAdress(location);
     // eslint-disable-next-line @typescript-eslint/ban-ts-comment
     // @ts-ignore
-    const coord : Coordinate = {lat: data["lat"] , lon: data["lng"]};
-
+    const coord : Coordinate = {lat: data.data[0].latitude, lon: data.data[0].longitude};
     const nearest : User = getNearestUser(coord);
     return res.status(200).json({message: "Location received", nearest: nearest});
   } catch (e) {

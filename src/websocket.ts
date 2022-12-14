@@ -1,10 +1,8 @@
 import WebSocket, {RawData, WebSocketServer} from "ws";
 import logger from "jet-logger";
-import jwtUtil from "@src/util/jwt-util";
-import userModels from "@src/mongo/userModels";
-import {TokenDecoded} from "@src/types/global";
 import verifyAuthorizationHeader from "@src/util/verify-auth";
 import {User} from "@src/types/User";
+import {Coordinate} from "calculate-distance-between-coordinates";
 
 const client_ws: Array<WebSocket> = [];
 export const Users : User[] = [];
@@ -35,7 +33,7 @@ const onConnectionHandler = async (ws: WebSocket, request: any) => {
 
   logger.info("💚 New client connected to the WebSocket server");
 
-  const newClient : User = { ws: ws, id: Users.length + 1, name: "user" + (Users.length + 1), position: {lat: 0, lon: 0}, active: false};
+  const newClient : User = { ws: ws, id: Users.length + 1, name: "user" + (Users.length + 1), position: {lat: 0, lon: 0}, active: false, distance: 99999};
   Users.push(newClient);
   // Setup handlers
   ws.on("message", (data) => onMessageHandler(ws, data));
@@ -51,7 +49,8 @@ const onMessageHandler = (ws: WebSocket, data: RawData) => {
   if (message.type === "position") {
     Users.forEach((user, index) => {
       if (user.ws === ws) {
-        Users[index].position = message.position;
+        user.position.lon = parseInt(message.position.lon)
+        user.position.lat = parseInt(message.position.lat)
       }
     });
   }

@@ -10,6 +10,8 @@ export function getNearestUser (Coord : Coordinate) : User {
   for  (let i = 0; i < Users.length; i++) {
     {
       const distance = computeDistance(Coord, Users[i].position);
+      console.log("Distance : " + distance);
+      Users[i].distance = distance;
       if (distance < computeDistance(Coord, bestUser.position)) {
         bestUser = Users[i];
       }
@@ -19,6 +21,7 @@ export function getNearestUser (Coord : Coordinate) : User {
     id: bestUser.id,
     position: bestUser.position,
     name: bestUser.name,
+    distance: bestUser.distance,
   };
   return cleanedUser as User;
 }

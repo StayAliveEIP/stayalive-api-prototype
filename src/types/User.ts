@@ -4,6 +4,8 @@ import {WebSocket} from "ws";
 export type User = {
   id: number,
   position: Coordinate,
+
+  distance: number,
   name: string,
   ws : WebSocket,
 
