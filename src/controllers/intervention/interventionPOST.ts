@@ -37,7 +37,7 @@ export default async (req: express.Request, res: express.Response) => {
       return (res.status(404).json({error: "NO_USER_AVAILABLE"}));
     nearest.ws.send(JSON.stringify({
       type: "alert",
-      location: location,
+      position: location,
     },
     ));
     const cleanUser = {
