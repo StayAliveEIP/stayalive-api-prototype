@@ -48,8 +48,8 @@ const onMessageHandler = (ws: WebSocket, data: RawData) => {
   if (message.type === "position") {
     Users.forEach((user, index) => {
       if (user.ws === ws) {
-        user.position.lon = parseInt(message.position.lon)
-        user.position.lat = parseInt(message.position.lat)
+        user.position.lon = parseFloat(message.position.lng)
+        user.position.lat = parseFloat(message.position.lat)
       }
     });
   }

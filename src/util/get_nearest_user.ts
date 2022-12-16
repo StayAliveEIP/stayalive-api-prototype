@@ -12,6 +12,7 @@ export function getNearestUser (coordinate : Coordinate) : User | null {
 
     if (bestUser == null) {
       bestUser = tmpUser;
+      bestUser.distance = computeDistance(coordinate, tmpUser.position);
       continue;
     }
 
